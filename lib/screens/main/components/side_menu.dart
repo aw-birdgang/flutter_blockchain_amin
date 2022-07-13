@@ -1,10 +1,22 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({
     Key? key,
   }) : super(key: key);
+
+  void getTokens() async {
+    try {
+      String api = dotenv.get('API_URL');
+      var response = await Dio().get('$api/v1/tokens');
+      print(response);
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +31,7 @@ class SideMenu extends StatelessWidget {
             svgSrc: "assets/icons/menu_dashbord.svg",
             press: () {
               print('Dashboard');
+              getTokens();
             },
           ),
           DrawerListTile(

@@ -20,6 +20,10 @@ dependencies:
   data_table_2: ^2.0.3
   dio: ^4.0.6
 
+  # utils
+  shared_preferences: 2.0.5 #
+  flutter_dotenv: ^5.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -32,3 +36,4 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/.env
