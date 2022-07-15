@@ -20,6 +20,13 @@ dependencies:
   data_table_2: ^2.0.3
   dio: ^4.0.6
 
+#  syncfusion_flutter_charts: ^20.2.36
+
+  #firebase
+  cloud_firestore: ^3.1.18
+  firebase_auth: ^3.3.20
+  firebase_core: ^1.18.0
+
   # utils
   shared_preferences: 2.0.5 #
   flutter_dotenv: ^5.0.2

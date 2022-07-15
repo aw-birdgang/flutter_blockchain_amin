@@ -1,15 +1,16 @@
+import 'package:flutter_blockchain_amin/controllers/MenuController.dart';
+import 'package:flutter_blockchain_amin/controllers/auth_controller.dart';
+import 'package:flutter_blockchain_amin/controllers/orders_controller.dart';
+import 'package:flutter_blockchain_amin/controllers/product_controller.dart';
+import 'package:flutter_blockchain_amin/shared/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-import '../../../constants.dart';
-import '../../../controllers/MenuController.dart';
-import '../../../responsive.dart';
+import '../../../shared/constants.dart';
 
 class Header extends StatelessWidget {
-  const Header({
-    Key? key,
-  }) : super(key: key);
+  final Function fct;
+  const Header({Key? key, required this.fct}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,50 +18,106 @@ class Header extends StatelessWidget {
       children: [
         if (!Responsive.isDesktop(context))
           IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: context.read<MenuController>().controlMenu,
-          ),
+              icon: Icon(Icons.menu),
+              onPressed: () {
+                fct();
+              }),
         if (!Responsive.isMobile(context))
-          Text(
-            "Dashboard",
-            style: Theme.of(context).textTheme.headline6,
+          Expanded(
+            child: Text(
+              "${context.watch<MenuController>().screens_title[context.watch<MenuController>().currentSelectedIndex]}",
+              style: Theme.of(context).textTheme.headline6,
+            ),
           ),
         if (!Responsive.isMobile(context))
           Spacer(flex: Responsive.isDesktop(context) ? 2 : 1),
-        const Expanded(child: SearchField()),
+        // Expanded(flex: 2, child: SearchField()),
+        ProfileCard()
       ],
     );
   }
 }
 
-class SearchField extends StatelessWidget {
-  const SearchField({
+class ProfileCard extends StatelessWidget {
+  const ProfileCard({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(left: defaultPadding),
+      padding: EdgeInsets.symmetric(
+        horizontal: defaultPadding,
+        vertical: defaultPadding / 2,
+      ),
+      decoration: BoxDecoration(
+        color: secondaryColor,
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        border: Border.all(color: Colors.white10),
+      ),
+      child: Consumer<AuthController>(
+        builder: (context, controller, child) {
+          return Row(
+            children: [
+              Image.asset(
+                "assets/images/profile_pic.JPG",
+                height: 38,
+              ),
+              if (!Responsive.isMobile(context))
+                Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: defaultPadding / 2),
+                    child: Text(controller.currentuserModel!.email.toString())),
+              Icon(Icons.keyboard_arrow_down),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class SearchField extends StatelessWidget {
+  SearchField({
+    Key? key,
+  }) : super(key: key);
+
+  var searchController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
     return TextField(
+      onChanged: (value) {
+        if (context.read<MenuController>().currentSelectedIndex == 1) {
+        } else if (context.read<MenuController>().currentSelectedIndex == 2) {
+          context.read<ProductController>().searchproduct(
+              value.trim().length > 2 ? value.trim().toString() : '');
+        }
+      },
+      controller: searchController,
       decoration: InputDecoration(
         hintText: "Search",
         fillColor: secondaryColor,
         filled: true,
-        border: const OutlineInputBorder(
+        border: OutlineInputBorder(
           borderSide: BorderSide.none,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
-        suffixIcon: InkWell(
-          onTap: () {},
-          child: Container(
-            padding: const EdgeInsets.all(defaultPadding * 0.75),
-            margin: const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-            decoration: const BoxDecoration(
-              color: primaryColor,
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-            child: SvgPicture.asset("assets/icons/Search.svg"),
-          ),
-        ),
+        // suffixIcon: InkWell(
+        //   onTap: () {
+        //     print(searchController.text);
+        //   },
+        //   child: Container(
+        //     padding: EdgeInsets.all(defaultPadding * 0.75),
+        //     margin: EdgeInsets.symmetric(horizontal: defaultPadding / 2),
+        //     decoration: BoxDecoration(
+        //       color: primaryColor,
+        //       borderRadius: const BorderRadius.all(Radius.circular(10)),
+        //     ),
+        //     child: SvgPicture.asset("assets/icons/Search.svg"),
+        //   ),
+        // ),
       ),
     );
   }

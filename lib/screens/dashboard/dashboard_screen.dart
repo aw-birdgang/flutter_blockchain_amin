@@ -1,41 +1,64 @@
+import 'package:flutter_blockchain_amin/controllers/dashboard_controller.dart';
+import 'package:flutter_blockchain_amin/controllers/orders_controller.dart';
+import 'package:flutter_blockchain_amin/screens/dashboard/components/orders.dart';
+import 'package:flutter_blockchain_amin/screens/dashboard/components/orders_pie_chart.dart';
+import 'package:flutter_blockchain_amin/screens/dashboard/components/top_selling_pie_chart.dart';
+import 'package:flutter_blockchain_amin/shared/responsive.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../../constants.dart';
-import '../../responsive.dart';
-import 'components/header.dart';
+import '../../shared/constants.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
-        primary: false,
-        padding: const EdgeInsets.all(defaultPadding),
-        child: Column(
+    return context.watch<OrdersController>().isloadingGetAllProduct
+        ? CircularProgressIndicator()
+        : Column(
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Header(),
-            const SizedBox(height: defaultPadding),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 5,
-                  child: Column(
+            Expanded(
+              flex: 5,
+              child: Column(
+                children: [
+                  Orders(),
+                  SizedBox(height: defaultPadding),
+                  //RecentFiles(),
+                  // if (Responsive.isMobile(context))
+                  //   SizedBox(height: defaultPadding),
+                  !Responsive.isMobile(context)
+                      ? Row(
                     children: [
-                      const SizedBox(height: defaultPadding),
-                      if (Responsive.isMobile(context))
-                        const SizedBox(height: defaultPadding),
+                      Expanded(child: OrdersPieChart()),
+                      SizedBox(width: defaultPadding),
+                      Expanded(child: TopSellingPieChart()),
+                    ],
+                  )
+                      : Column(
+                    children: [
+                      OrdersPieChart(),
+                      SizedBox(
+                        height: defaultPadding,
+                      ),
+                      TopSellingPieChart(),
                     ],
                   ),
-                ),
-                if (!Responsive.isMobile(context))
-                  const SizedBox(width: defaultPadding),
-              ],
-            )
+                ],
+              ),
+            ),
+            if (!Responsive.isMobile(context))
+              SizedBox(width: defaultPadding),
+            // On Mobile means if the screen is less than 850 we dont want to show it
+            // if (!Responsive.isMobile(context))
+            //   Expanded(
+            //     flex: 2,
+            //     child: StarageDetails(),
+            //   ),
           ],
-        ),
-      ),
+        )
+      ],
     );
   }
 }
