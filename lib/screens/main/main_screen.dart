@@ -1,4 +1,4 @@
-import 'package:flutter_blockchain_amin/controllers/MenuController.dart';
+import 'package:flutter_blockchain_amin/controllers/menu_controller.dart';
 import 'package:flutter_blockchain_amin/controllers/auth_controller.dart';
 import 'package:flutter_blockchain_amin/screens/dashboard/components/header.dart';
 import 'package:flutter_blockchain_amin/shared/constants.dart';
@@ -22,12 +22,9 @@ class MainScreen extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // We want this side menu only for large screen
             if (Responsive.isDesktop(context))
               const Expanded(
-                // default flex = 1
-                // and it takes 1/6 part of the screen
-                child: const SideMenu(),
+                child: SideMenu(),
               ),
             Expanded(
               // It takes 5/6 part of the screen
@@ -44,7 +41,8 @@ class MainScreen extends StatelessWidget {
                         }),
                       const SizedBox(height: defaultPadding),
                       context.watch<MenuController>().screens[
-                      context.watch<MenuController>().currentSelectedIndex],
+                        context.watch<MenuController>().currentSelectedIndex
+                      ],
                     ],
                   ),
                 ),

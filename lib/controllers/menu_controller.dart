@@ -5,6 +5,7 @@ import 'package:flutter_blockchain_amin/screens/login/login_screen.dart';
 import 'package:flutter_blockchain_amin/shared/constants.dart';
 import 'package:flutter/material.dart';
 
+import '../screens/token/token_list_screen.dart';
 import 'auth_controller.dart';
 
 class MenuController extends ChangeNotifier {
@@ -18,8 +19,9 @@ class MenuController extends ChangeNotifier {
       if (i == index) {
         print(menuModelList[i].title.toString() + " selected");
         menuModelList[i].isselected = true;
-      } else
+      } else {
         menuModelList[i].isselected = false;
+      }
     }
     currentSelectedIndex = index;
     // menuModelList.forEach((element) {
@@ -48,45 +50,41 @@ class MenuController extends ChangeNotifier {
     buildMenu();
   }
 
-  final _offline_screen = [LoginScreen()];
-
   final _screens = [
-    DashboardScreen(),
-    // OrdersScreen(),
-    // ProductScreen(),
+    const DashboardScreen(),
+    const TokenListScreen(),
   ];
 
-  final _offline_screens_title = ['Login'];
   final _screens_title = [
     'Dashboard',
-    'Orders',
-    'Products',
+    'Token List',
   ];
 
-  List<MenuModel> _offline_menuModelList = [
+  final _screens_description = [
+    '홈',
+    '토큰 목록',
+  ];
+
+  final List<MenuModel> _offline_menuModelList = [
     MenuModel("login", "assets/icons/menu_login.svg")
   ];
 
-  List<MenuModel> _menuModelList = [
+  final List<MenuModel> _menuModelList = [
     MenuModel("Dashboard", "assets/icons/menu_dashbord.svg", isselected: true),
-    MenuModel("Orders", "assets/icons/menu_tran.svg"),
-    MenuModel("Products", "assets/icons/menu_task.svg"),
-    MenuModel("Logout", "assets/icons/menu_logout.svg"),
+    MenuModel("Tokens", "assets/icons/menu_tran.svg"),
+    // MenuModel("Products", "assets/icons/menu_task.svg"),
+    // MenuModel("Logout", "assets/icons/menu_logout.svg"),
   ];
 
   List<MenuModel> menuModelList = [];
   var screens_title = [];
+  var screens_description = [];
   var screens = [];
   void buildMenu() {
-    if (_authProvider != null && _authProvider!.currentuserModel == null) {
-      screens_title = _offline_screens_title;
-      menuModelList = _offline_menuModelList;
-      screens = _offline_screen;
-    } else {
-      screens_title = _screens_title;
-      menuModelList = _menuModelList;
-      screens = _screens;
-    }
+    screens_title = _screens_title;
+    screens_description = _screens_description;
+    menuModelList = _menuModelList;
+    screens = _screens;
     notifyListeners();
   }
 }

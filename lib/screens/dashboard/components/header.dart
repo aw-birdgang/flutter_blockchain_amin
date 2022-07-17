@@ -1,9 +1,7 @@
-import 'package:flutter_blockchain_amin/controllers/MenuController.dart';
-import 'package:flutter_blockchain_amin/controllers/auth_controller.dart';
-import 'package:flutter_blockchain_amin/controllers/orders_controller.dart';
-import 'package:flutter_blockchain_amin/controllers/product_controller.dart';
-import 'package:flutter_blockchain_amin/shared/responsive.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_blockchain_amin/controllers/menu_controller.dart';
+import 'package:flutter_blockchain_amin/controllers/auth_controller.dart';
+import 'package:flutter_blockchain_amin/shared/responsive.dart';
 import 'package:provider/provider.dart';
 
 import '../../../shared/constants.dart';
@@ -18,21 +16,30 @@ class Header extends StatelessWidget {
       children: [
         if (!Responsive.isDesktop(context))
           IconButton(
-              icon: Icon(Icons.menu),
+              icon: const Icon(Icons.menu),
               onPressed: () {
                 fct();
               }),
         if (!Responsive.isMobile(context))
           Expanded(
-            child: Text(
-              "${context.watch<MenuController>().screens_title[context.watch<MenuController>().currentSelectedIndex]}",
-              style: Theme.of(context).textTheme.headline6,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  "${context.watch<MenuController>().screens_title[context.watch<MenuController>().currentSelectedIndex]}",
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                Text(
+                  "${context.watch<MenuController>().screens_description[context.watch<MenuController>().currentSelectedIndex]}",
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+              ],
             ),
           ),
         if (!Responsive.isMobile(context))
           Spacer(flex: Responsive.isDesktop(context) ? 2 : 1),
-        // Expanded(flex: 2, child: SearchField()),
-        ProfileCard()
+        Expanded(flex: 2, child: SearchField()),
+        const ProfileCard()
       ],
     );
   }
@@ -46,8 +53,8 @@ class ProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: defaultPadding),
-      padding: EdgeInsets.symmetric(
+      margin: const EdgeInsets.only(left: defaultPadding),
+      padding: const EdgeInsets.symmetric(
         horizontal: defaultPadding,
         vertical: defaultPadding / 2,
       ),
@@ -69,7 +76,7 @@ class ProfileCard extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: defaultPadding / 2),
                     child: Text(controller.currentuserModel!.email.toString())),
-              Icon(Icons.keyboard_arrow_down),
+              const Icon(Icons.keyboard_arrow_down),
             ],
           );
         },
@@ -89,35 +96,16 @@ class SearchField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       onChanged: (value) {
-        if (context.read<MenuController>().currentSelectedIndex == 1) {
-        } else if (context.read<MenuController>().currentSelectedIndex == 2) {
-          context.read<ProductController>().searchproduct(
-              value.trim().length > 2 ? value.trim().toString() : '');
-        }
       },
       controller: searchController,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         hintText: "Search",
         fillColor: secondaryColor,
         filled: true,
         border: OutlineInputBorder(
           borderSide: BorderSide.none,
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
-        // suffixIcon: InkWell(
-        //   onTap: () {
-        //     print(searchController.text);
-        //   },
-        //   child: Container(
-        //     padding: EdgeInsets.all(defaultPadding * 0.75),
-        //     margin: EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-        //     decoration: BoxDecoration(
-        //       color: primaryColor,
-        //       borderRadius: const BorderRadius.all(Radius.circular(10)),
-        //     ),
-        //     child: SvgPicture.asset("assets/icons/Search.svg"),
-        //   ),
-        // ),
       ),
     );
   }

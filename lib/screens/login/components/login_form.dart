@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
-import '../../../controllers/MenuController.dart';
+import '../../../controllers/menu_controller.dart';
 import '../../../controllers/auth_controller.dart';
 import '../../../shared/components/default_button.dart';
 import '../../../shared/components/default_text_form.dart';
@@ -13,6 +11,8 @@ class LoginForm extends StatelessWidget {
   var text_passwordcontroller = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
+  LoginForm({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -21,11 +21,11 @@ class LoginForm extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
+          const Text(
             "Login Screen",
             style: TextStyle(fontSize: 30),
           ),
-          SizedBox(
+          const SizedBox(
             height: 40,
           ),
           defaultTextFormField(
@@ -61,7 +61,7 @@ class LoginForm extends StatelessWidget {
               },
             );
           }),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           context.watch<AuthController>().isloadingSignIn
@@ -79,7 +79,7 @@ class LoginForm extends StatelessWidget {
                         text_emailcontroller.clear();
                         text_passwordcontroller.clear();
                         print("sign in successfully");
-                        context.read<MenuController>()..buildMenu();
+                        context.read<MenuController>().buildMenu();
                       } else {}
                     });
                 }
