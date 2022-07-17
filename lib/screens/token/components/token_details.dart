@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_blockchain_amin/shared/components/default_text_info_row.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controllers/contract_controller.dart';
@@ -23,7 +24,6 @@ class TokenDetails extends StatelessWidget {
     );
   }
 
-
   Widget _consumer(BuildContext context) {
     return Consumer<ContractController>(
       builder: (context, contractController, child) {
@@ -31,7 +31,6 @@ class TokenDetails extends StatelessWidget {
       },
     );
   }
-
 
   Widget _scaffold(BuildContext context, ContractController contractController,) {
     return Container(
@@ -60,19 +59,19 @@ class TokenDetails extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    getTokenInfo(context, "ID", token.id.toString()),
+                    getTextInfoRow(context, "ID", token.id.toString()),
                     const SizedBox(
                       height: 20,
                     ),
-                    getTokenInfo(context, "SYMBOL", token.symbol),
+                    getTextInfoRow(context, "SYMBOL", token.symbol),
                     const SizedBox(
                       height: 20,
                     ),
-                    getTokenInfo(context, "NAME", token.name),
+                    getTextInfoRow(context, "NAME", token.name),
                     const SizedBox(
                       height: 20,
                     ),
-                    getTokenInfo(context, "TOTAL_SUPPLY", token.totalSupply),
+                    getTextInfoRow(context, "TOTAL_SUPPLY", token.totalSupply),
                     const SizedBox(
                       height: 20,
                     ),
@@ -85,7 +84,6 @@ class TokenDetails extends StatelessWidget {
       ),
     );
   }
-
 
   getTokenInfo (BuildContext context, title, value) {
     return Row(

@@ -32,13 +32,10 @@ class SideMenu extends StatelessWidget {
 class DrawerListTile extends StatelessWidget {
   const DrawerListTile({
     Key? key,
-    // For selecting those three line once press "Command+D"
     required this.listOfModel,
-    // required this.press,
   }) : super(key: key);
 
   final List<MenuModel> listOfModel;
-  //final VoidCallback press;
 
   @override
   Widget build(BuildContext context) {
@@ -54,17 +51,10 @@ class DrawerListTile extends StatelessWidget {
             selected: true,
             selectedColor: Colors.grey.shade400,
             onTap: () async {
-              if (i != 3) {
-                context.read<MenuController>().onChangeSelectedMenu(i);
-                if (Responsive.isMobile(context) ||
-                    Responsive.isBigMobile(context) ||
-                    Responsive.isTablet(context)) Navigator.pop(context);
-              } else {
-                context.read<AuthController>()
-                  ..SignOut().then((value) {
-                    context.read<MenuController>().buildMenu();
-                  });
-              }
+              context.read<MenuController>().onChangeSelectedMenu(i);
+              if (Responsive.isMobile(context) ||
+                  Responsive.isBigMobile(context) ||
+                  Responsive.isTablet(context)) Navigator.pop(context);
             },
             horizontalTitleGap: 0.0,
             leading: SvgPicture.asset(

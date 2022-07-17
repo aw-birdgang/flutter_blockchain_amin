@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'controllers/auth_controller.dart';
+import 'controllers/host_controller.dart';
+import 'controllers/key_controller.dart';
 import 'controllers/menu_controller.dart';
 import 'controllers/token_list_controller.dart';
 import 'screens/main/main_screen.dart';
@@ -26,6 +28,12 @@ Future<void> main() async {
     ),
     ChangeNotifierProvider(
       create: (context) => TokenListController()..getTokens(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => HostController()..getHosts(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => KeyController()..getKmsKeys(),
     ),
   ], child: const MyApp()));
 }

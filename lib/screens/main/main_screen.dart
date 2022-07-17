@@ -37,7 +37,7 @@ class MainScreen extends StatelessWidget {
                     children: [
                       if (authprovider.currentuserModel != null)
                         Header(fct: () {
-                          context.read<MenuController>().main_controlMenu();
+                          context.read<MenuController>().mainControlMenu();
                         }),
                       const SizedBox(height: defaultPadding),
                       context.watch<MenuController>().screens[

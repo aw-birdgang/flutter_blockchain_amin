@@ -1,3 +1,4 @@
+import 'package:easy_rich_text/easy_rich_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blockchain_amin/screens/token/components/token_details.dart';
 import 'package:flutter_switch/flutter_switch.dart';
@@ -98,18 +99,18 @@ class _TokenItemState extends State<TokenItem> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    EasyRichText(
                       symbol,
-                      style: const TextStyle(fontSize: 20),
+                      defaultStyle: TextStyle(fontSize: !Responsive.isDesktop(context) ? 15 : 20),
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(
                       height: 5,
                     ),
-                    Text(
+                    EasyRichText(
                       totalSupply,
-                      style:
-                      TextStyle(color: Colors.green.shade400, fontSize: 18),
+                      defaultStyle: TextStyle(color: Colors.green.shade400, fontSize: !Responsive.isDesktop(context) ? 15 : 20),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
