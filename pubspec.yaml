@@ -22,11 +22,6 @@ dependencies:
 
   syncfusion_flutter_charts: 20.2.38
 
-  #firebase
-#  cloud_firestore: 3.3.0
-#  firebase_auth: 3.4.2
-#  firebase_core: 1.19.2
-
   # utils
   shared_preferences: 2.0.15
   flutter_dotenv: ^5.0.2

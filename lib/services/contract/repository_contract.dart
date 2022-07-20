@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import '../../models/balance.dart';
 import '../log/custom_logInterceptor.dart';
 import 'irepository_contract.dart';
 
@@ -18,10 +19,9 @@ class RepositoryContract implements IrepositoryContract {
         return handler.resolve(Response(requestOptions:options, data:'fake data'));
       },
     ));
-    // CustomLog
     dio.interceptors.add(CustomLogInterceptor());
-    print('getTokens > response.data :: ' + response.toString());
-    return null;
+    //print('getBalance > response.data :: ' + response.toString());
+    return Balance.fromJson(response.data);
   }
 
 }

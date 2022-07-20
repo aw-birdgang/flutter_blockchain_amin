@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_blockchain_amin/screens/token/components/token_balance.dart';
 import 'package:flutter_blockchain_amin/shared/components/default_text_info_row.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +19,7 @@ class TokenDetails extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(token.name.toString()),
+          backgroundColor: secondaryColor,
         ),
         body: _consumer(context),
       ),
@@ -42,73 +44,86 @@ class TokenDetails extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Details Info",
-            style: TextStyle(fontSize: 30),
+          tokenInfo(context,),
+          Row(
+            children: [
+              btnGetBalance(context,),
+              btnMint(context,),
+            ],
           ),
-          const Divider(
-            thickness: 2,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    getTextInfoRow(context, "ID", token.id.toString()),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    getTextInfoRow(context, "SYMBOL", token.symbol),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    getTextInfoRow(context, "NAME", token.name),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    getTextInfoRow(context, "TOTAL_SUPPLY", token.totalSupply),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          )
         ],
       ),
     );
   }
 
-  getTokenInfo (BuildContext context, title, value) {
-    return Row(
+  Widget tokenInfo (BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-            width: Responsive.isDesktop(context) ? 150 : 100,
-            child: Text(
-              title,
-              style: TextStyle(
-                  fontSize: !Responsive.isDesktop(context)
-                      ? 15
-                      : 25),
-            )),
         const SizedBox(
-          width: 20,
+          height: 10,
         ),
-        Text(
-          value,
-          style: TextStyle(
-              color: Colors.green.shade300,
-              fontSize: !Responsive.isDesktop(context) ? 15 : 25),
+        Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  getTextInfoRow(context, "ID", token.id.toString()),
+                  getTextInfoRow(context, "SYMBOL", token.symbol),
+                  getTextInfoRow(context, "NAME", token.name),
+                  getTextInfoRow(context, "TOTAL_SUPPLY", token.totalSupply),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        const Divider(
+          thickness: 2,
         ),
       ],
     );
   }
 
+  Widget btnGetBalance (BuildContext context,) {
+    return Padding(
+      padding: const EdgeInsets.all(defaultPadding),
+      child: ElevatedButton(
+        child: const Text("GET BALANCE"),
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.symmetric(
+            horizontal: defaultPadding,
+            vertical: defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
+          ),
+        ),
+        onPressed: () {
+          print("btnGetBalance > onPressed ");
+          Navigator.push(context, MaterialPageRoute(builder: (context) => TokenBalance(token)));
+        },
+      ),
+    );
+  }
+
+  Widget btnMint (BuildContext context,) {
+    return Padding(
+      padding: const EdgeInsets.all(defaultPadding),
+      child: ElevatedButton(
+        child: const Text("MINT"),
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.symmetric(
+            horizontal: defaultPadding,
+            vertical: defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
+          ),
+        ),
+        onPressed: () {
+          print("btnMint > onPressed ");
+        },
+      ),
+    );
+  }
 
 }

@@ -52,7 +52,7 @@ class _HostItemState extends State<HostItem> {
                   PopupMenuButton(
                       icon: const Icon(
                         Icons.more_vert_rounded,
-                        color: secondaryColor,
+                        color: whiteColor,
                       ),
                       color: secondaryColor,
                       itemBuilder: (context) => [

@@ -11,7 +11,6 @@ import '../../../shared/utils.dart';
 class TokenItem extends StatefulWidget {
   TokenItem(this.token, {Key? key}) : super(key: key);
   Token token;
-
   @override
   State<TokenItem> createState() => _TokenItemState();
 }
@@ -48,24 +47,6 @@ class _TokenItemState extends State<TokenItem> {
                     children: [
                       Expanded(
                         child: Container(
-                          height: Responsive.isDesktop(context)
-                              ? size.width * 0.14
-                              : Responsive.isTablet(context)
-                              ? size.width * 0.25
-                              : Responsive.isBigMobile(context)
-                              ? size.width * 0.4
-                              : size.width * .6,
-                          clipBehavior: Clip.none,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            image: DecorationImage(
-                              fit: BoxFit.fill,
-                              colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.dstATop),
-                              image: const NetworkImage(
-                                'https://gpex-api-dev.s3.ap-northeast-3.amazonaws.com/api/resource/token/GPW.png',
-                              ),
-                            ),
-                          ),
                         ),
                       ),
                     ],
@@ -73,7 +54,7 @@ class _TokenItemState extends State<TokenItem> {
                   PopupMenuButton(
                     icon: const Icon(
                       Icons.more_vert_rounded,
-                      color: secondaryColor,
+                      color: whiteColor,
                     ),
                     color: secondaryColor,
                     itemBuilder: (context) => [
@@ -141,7 +122,6 @@ class _TokenItemState extends State<TokenItem> {
                   ),
                 ],
               ),
-
             ],
           ),
         ),

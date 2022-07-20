@@ -7,6 +7,7 @@ class Token {
   String? totalSupply;
   double? decimals;
   String? type;
+  bool? exposeYn;
   String? createdAt;
   String? updatedAt;
 
@@ -16,6 +17,7 @@ class Token {
     this.totalSupply,
     this.decimals,
     this.type,
+    this.exposeYn,
     this.createdAt,
     this.updatedAt,
   });
@@ -26,6 +28,7 @@ class Token {
     "totalSupply": totalSupply,
     "decimals": decimals,
     "type": type,
+    "exposeYn": exposeYn,
     "createdAt": createdAt,
     "updatedAt": updatedAt,
   };
@@ -39,6 +42,7 @@ class Token {
     totalSupply = getItemFromMapForStr(map, "totalSupply");
     decimals = getItemFromMapForDouble(map, "decimals");
     type = getItemFromMapForStr(map, "type");
+    exposeYn = getItemFromMapForBool(map, "exposeYn");
     createdAt = getItemFromMapForStr(map, "createdAt");
     updatedAt = getItemFromMapForStr(map, "updatedAt");
   }

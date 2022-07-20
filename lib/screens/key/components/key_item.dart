@@ -53,7 +53,7 @@ class _KeyItemState extends State<KeyItem> {
                   PopupMenuButton(
                       icon: const Icon(
                         Icons.more_vert_rounded,
-                        color: secondaryColor,
+                        color: whiteColor,
                       ),
                       color: secondaryColor,
                       itemBuilder: (context) => [

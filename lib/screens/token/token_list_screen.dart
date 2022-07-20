@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../controllers/token_list_controller.dart';
 import '../../shared/constants.dart';
 import '../../shared/responsive.dart';
+import 'components/token_add.dart';
 import 'components/token_item.dart';
 
 class TokenListScreen extends StatelessWidget {
@@ -27,6 +28,7 @@ class TokenListScreen extends StatelessWidget {
               ),
               onPressed: () {
                 print("TokenListScreen > onPressed ");
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const TokenAdd()));
               },
               icon: const Icon(Icons.add),
               label: const Text("Add New"),

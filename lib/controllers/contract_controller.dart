@@ -1,15 +1,12 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blockchain_amin/services/contract/repository_contract.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import '../models/token.dart';
-import '../services/tokens/repository_token.dart';
+import '../models/balance.dart';
 
 class ContractController extends ChangeNotifier {
 
   RepositoryContract repositoryContract = RepositoryContract();
-  dynamic balance;
+  late String balance = "0";
   bool isLoading = true;
 
   ContractController() {
@@ -25,8 +22,10 @@ class ContractController extends ChangeNotifier {
     try {
       isLoading = true;
       notifyListeners();
-      balance = await repositoryContract.getBalance(symbol, address);
+      Balance balance = await repositoryContract.getBalance(symbol, address);
       print('getBalance > balance :: ' + balance.toString());
+      this.balance = balance.balance!;
+      print('getBalance > this.balance :: ' + this.balance);
       isLoading = false;
       notifyListeners();
     } catch (e) {

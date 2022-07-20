@@ -1,17 +1,16 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../models/token.dart';
 import '../services/tokens/repository_token.dart';
 
-class TokenInfoController extends ChangeNotifier {
+class TokenController extends ChangeNotifier {
 
   RepositoryToken repositoryToken = RepositoryToken();
   List<Token> listToken = [];
+  late Token token;
   bool isLoading = true;
 
-  TokenInfoController() {
+  TokenController() {
     init();
   }
 
@@ -28,6 +27,19 @@ class TokenInfoController extends ChangeNotifier {
       for (var element in listToken) {
         print('getTokens > element :: ' + element.toString());
       }
+      isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void createToken(Token token) async {
+    try {
+      isLoading = true;
+      notifyListeners();
+      token = await repositoryToken.createToken(token);
+      print('createToken > token :: ' + token.toString());
       isLoading = false;
       notifyListeners();
     } catch (e) {
