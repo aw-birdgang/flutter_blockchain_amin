@@ -5,7 +5,7 @@ class Token {
   String? symbol;
   String? name;
   String? totalSupply;
-  double? decimals;
+  int? decimals;
   String? type;
   bool? exposeYn;
   String? createdAt;
@@ -24,6 +24,7 @@ class Token {
 
   Map<String, dynamic> toMap() => {
     "id": id,
+    "symbol": symbol,
     "name": name,
     "totalSupply": totalSupply,
     "decimals": decimals,
@@ -40,7 +41,7 @@ class Token {
     name = getItemFromMapForStr(map, "name");
     symbol = getItemFromMapForStr(map, "symbol");
     totalSupply = getItemFromMapForStr(map, "totalSupply");
-    decimals = getItemFromMapForDouble(map, "decimals");
+    decimals = getItemFromMapForInt(map, "decimals");
     type = getItemFromMapForStr(map, "type");
     exposeYn = getItemFromMapForBool(map, "exposeYn");
     createdAt = getItemFromMapForStr(map, "createdAt");

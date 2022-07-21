@@ -5,6 +5,7 @@ class Host {
   String? name;
   String? accessToken;
   String? type;
+  bool? exposeYn;
   String? createdAt;
   String? updatedAt;
 
@@ -13,6 +14,7 @@ class Host {
     this.name,
     this.accessToken,
     this.type,
+    this.exposeYn,
     this.createdAt,
     this.updatedAt,
   });
@@ -22,6 +24,7 @@ class Host {
     "name": name,
     "accessToken": accessToken,
     "type": type,
+    "exposeYn": exposeYn,
     "createdAt": createdAt,
     "updatedAt": updatedAt,
   };
@@ -32,6 +35,7 @@ class Host {
     name = getItemFromMapForStr(map, "name");
     accessToken = getItemFromMapForStr(map, "accessToken");
     type = getItemFromMapForStr(map, "type");
+    exposeYn = getItemFromMapForBool(map, "exposeYn");
     createdAt = getItemFromMapForStr(map, "createdAt");
     updatedAt = getItemFromMapForStr(map, "updatedAt");
   }

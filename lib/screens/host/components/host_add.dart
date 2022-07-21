@@ -4,23 +4,20 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/object_util.dart';
-import '../../../controllers/token_controller.dart';
-import '../../../models/token.dart';
+import '../../../controllers/host_controller.dart';
+import '../../../models/host.dart';
 import '../../../shared/constants.dart';
 import '../../../shared/responsive.dart';
 
-class TokenAdd extends StatefulWidget {
-  const TokenAdd({Key? key}) : super(key: key);
+class HostAdd extends StatefulWidget {
+  const HostAdd({Key? key}) : super(key: key);
   @override
-  State<TokenAdd> createState() => _TokenAddState();
+  State<HostAdd> createState() => _HostAddState();
 }
 
-class _TokenAddState extends State<TokenAdd> {
-  late TokenController tokenController;
+class _HostAddState extends State<HostAdd> {
+  late HostController hostController;
   final nameController = TextEditingController();
-  final symbolController = TextEditingController();
-  final totalSupplyController = TextEditingController();
-  final decimalsController = TextEditingController();
   final typeController = TextEditingController();
 
   bool status = false;
@@ -28,7 +25,7 @@ class _TokenAddState extends State<TokenAdd> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => TokenController(),
+      create: (context) => HostController(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text(""),
@@ -40,15 +37,15 @@ class _TokenAddState extends State<TokenAdd> {
   }
 
   Widget _consumer(BuildContext context) {
-    return Consumer<TokenController>(
-      builder: (context, tokenController, child) {
-        this.tokenController = tokenController;
-        return _scaffold(context, tokenController);
+    return Consumer<HostController>(
+      builder: (context, hostController, child) {
+        this.hostController = hostController;
+        return _scaffold(context, hostController);
       },
     );
   }
 
-  Widget _scaffold(BuildContext context, TokenController tokenController,) {
+  Widget _scaffold(BuildContext context, HostController hostController,) {
     return Container(
       padding: const EdgeInsets.all(defaultPadding),
       decoration: BoxDecoration(
@@ -59,12 +56,9 @@ class _TokenAddState extends State<TokenAdd> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           getName(context),
-          getSymbol(context),
-          getTotalSupply(context),
-          getDecimals(context),
           getType(context),
           getExposeYn(context),
-          getBtnAddToken(context),
+          getBtnAddHost(context),
         ],
       ),
     );
@@ -77,46 +71,7 @@ class _TokenAddState extends State<TokenAdd> {
         controller: nameController,
         decoration: const InputDecoration(
           border: OutlineInputBorder(),
-          hintText: 'input token name',
-        ),
-      ),
-    );
-  }
-
-  getSymbol(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(8),
-      child: TextField(
-        controller: symbolController,
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: 'input symbol name',
-        ),
-      ),
-    );
-  }
-
-  getTotalSupply(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(8),
-      child: TextField(
-        controller: totalSupplyController,
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: 'input token total supply',
-        ),
-      ),
-    );
-  }
-
-  getDecimals(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(8),
-      child: TextField(
-        controller: decimalsController,
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: 'input decimal',
+          hintText: 'input host name',
         ),
       ),
     );
@@ -164,7 +119,7 @@ class _TokenAddState extends State<TokenAdd> {
   }
 
 
-  getBtnAddToken(BuildContext context) {
+  getBtnAddHost(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(8),
       child: ElevatedButton.icon(
@@ -176,14 +131,11 @@ class _TokenAddState extends State<TokenAdd> {
         ),
         onPressed: () {
           try {
-            Token token = Token();
-            token.name = symbolController.text;
-            token.symbol = nameController.text;
-            token.totalSupply = totalSupplyController.text;
-            token.decimals = int.parse(decimalsController.text);
-            token.type = typeController.text;
-            token.exposeYn = status;
-            tokenController.createToken(token, response: (result) {
+            Host host = Host();
+            host.name = nameController.text;
+            host.type = typeController.text;
+            host.exposeYn = status;
+            hostController.registerHost(host, response: (result) {
               if (isExists(result)) {
                 Navigator.pop(context);
               }
@@ -193,7 +145,7 @@ class _TokenAddState extends State<TokenAdd> {
           }
         },
         icon: const Icon(Icons.add),
-        label: const Text("Add Token"),
+        label: const Text("Add Host"),
       ),
     );
   }

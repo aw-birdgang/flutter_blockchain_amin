@@ -26,12 +26,12 @@ Future<void> main() async {
       update: (context, auth, previousMenu) => MenuController(auth),
       create: (BuildContext context) => MenuController(null),
     ),
-    ChangeNotifierProvider(
-      create: (context) => TokenListController()..getTokens(),
-    ),
-    ChangeNotifierProvider(
-      create: (context) => HostController()..getHosts(),
-    ),
+    // ChangeNotifierProvider(
+    //   create: (context) => TokenListController()..getTokens(),
+    // ),
+    // ChangeNotifierProvider(
+    //   create: (context) => HostController()..getHosts(),
+    // ),
     ChangeNotifierProvider(
       create: (context) => KeyController()..getKmsKeys(),
     ),

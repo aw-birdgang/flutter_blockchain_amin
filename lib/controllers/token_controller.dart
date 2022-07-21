@@ -34,14 +34,15 @@ class TokenController extends ChangeNotifier {
     }
   }
 
-  void createToken(Token token) async {
+  void createToken(Token request, {response}) async {
     try {
       isLoading = true;
       notifyListeners();
-      token = await repositoryToken.createToken(token);
+      token = await repositoryToken.createToken(request);
       print('createToken > token :: ' + token.toString());
       isLoading = false;
       notifyListeners();
+      response(token);
     } catch (e) {
       print(e);
     }

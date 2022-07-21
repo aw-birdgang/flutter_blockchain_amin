@@ -40,28 +40,26 @@ class RepositoryToken implements IrepositoryToken {
     String api = dotenv.get('API_URL');
     String url = '$api/v1/tokens';
     print('createToken > url :: ' + url);
+    print('createToken > token.toString() :: ' + token.toString());
+    String apiKey = dotenv.get('API_KEY');
+    print('createToken > apiKey :: ' + apiKey);
     Dio dio = Dio();
-
-    var formData = FormData.fromMap({
-      'symbol': token.symbol,
-      'name': token.name,
-      'totalSupply': token.totalSupply,
-      'decimals': token.decimals,
-      'type': token.type,
-      'exposeYn': token.exposeYn == true ? 1 : 0,
-    });
-    print('createToken > formData.toString() :: ' + formData.toString());
-    Response response = await dio.post(url, data: formData);
     dio.interceptors.add(InterceptorsWrapper(
-      onRequest:(options, handler) {
-        String apiKey = dotenv.get('API_KEY');
-        print('createToken > apiKey :: ' + apiKey);
+      onRequest:(options, handler) async {
         // 매 요청마다 헤더에 AccessToken을 포함
         options.headers['Authorization'] = 'Bearer $apiKey';
-        return handler.resolve(Response(requestOptions:options, data:'fake data'));
+        return handler.next(options); //continue
       },
+      onResponse:(response,handler) {
+        return handler.next(response); // continue
+      },
+      onError: (error, handler) {
+        print('createToken > error.message :: ' + error.message);
+        return  handler.next(error);
+      }
     ));
-    dio.interceptors.add(CustomLogInterceptor());
+    // dio.interceptors.add(CustomLogInterceptor());
+    Response response = await dio.post(url, data: token.toMap());
     return Token.fromJson(response.data);
   }
 

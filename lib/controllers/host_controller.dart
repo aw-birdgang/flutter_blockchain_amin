@@ -7,6 +7,7 @@ class HostController extends ChangeNotifier {
 
   RepositoryHost repositoryHost = RepositoryHost();
   List<Host> listHost = [];
+  late Host host;
   bool isLoading = true;
 
   HostController() {
@@ -17,7 +18,6 @@ class HostController extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
   }
-
 
   void getHosts() async {
     try {
@@ -34,14 +34,14 @@ class HostController extends ChangeNotifier {
     }
   }
 
-
-  void registerHost(name, type) async {
+  void registerHost(Host request, {response}) async {
     try {
       isLoading = true;
       notifyListeners();
-      await repositoryHost.registerHost(name, type);
+      host = await repositoryHost.registerHost(request);
       isLoading = false;
       notifyListeners();
+      response(host);
     } catch (e) {
       print(e);
     }

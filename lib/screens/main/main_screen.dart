@@ -6,6 +6,7 @@ import 'package:flutter_blockchain_amin/shared/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../token/token_list_screen.dart';
 import 'components/side_menu.dart';
 
 class MainScreen extends StatelessWidget {
@@ -25,7 +26,7 @@ class MainScreen extends StatelessWidget {
             if (Responsive.isDesktop(context))
               const Expanded(
                 child: SideMenu(),
-              ),
+            ),
             Expanded(
               // It takes 5/6 part of the screen
               flex: 5,
@@ -40,9 +41,11 @@ class MainScreen extends StatelessWidget {
                           context.read<MenuController>().mainControlMenu();
                         }),
                       const SizedBox(height: defaultPadding),
-                      context.watch<MenuController>().screens[
-                        context.watch<MenuController>().currentSelectedIndex
-                      ],
+                      Container(
+                        child: context.watch<MenuController>().screens[
+                          context.watch<MenuController>().currentSelectedIndex
+                        ],
+                      ),
                     ],
                   ),
                 ),
