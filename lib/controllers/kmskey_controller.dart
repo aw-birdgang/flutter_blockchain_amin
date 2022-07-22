@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blockchain_amin/services/key/repository_key.dart';
 
-import '../models/host.dart';
 import '../models/kmsKey.dart';
-import '../services/host/repository_host.dart';
 
-class KeyController extends ChangeNotifier {
+class KmsKeyController extends ChangeNotifier {
 
   RepositoryKey repositoryKey = RepositoryKey();
   List<KmsKey> listKmsKeys = [];
+  late KmsKey kmsKey;
   bool isLoading = true;
 
-  KeyController() {
+  KmsKeyController() {
     init();
   }
 
@@ -19,7 +18,6 @@ class KeyController extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
   }
-
 
   void getKmsKeys() async {
     try {
@@ -36,14 +34,14 @@ class KeyController extends ChangeNotifier {
     }
   }
 
-
-  void encryptKey(name, type) async {
+  void encryptKey(KmsKey request, {response}) async {
     try {
       isLoading = true;
       notifyListeners();
-      await repositoryKey.encryptKey(name, type);
+      kmsKey = await repositoryKey.encryptKey(request);
       isLoading = false;
       notifyListeners();
+      response(kmsKey);
     } catch (e) {
       print(e);
     }

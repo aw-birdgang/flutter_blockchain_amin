@@ -1,4 +1,3 @@
-import 'package:easy_rich_text/easy_rich_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
@@ -7,15 +6,14 @@ import '../../../shared/components/default_text_info_row.dart';
 import '../../../shared/constants.dart';
 import '../../../shared/utils.dart';
 
-class KeyItem extends StatefulWidget {
-  KeyItem(this.kmsKey, {Key? key}) : super(key: key);
+class KmsKeyItem extends StatefulWidget {
+  KmsKeyItem(this.kmsKey, {Key? key}) : super(key: key);
   KmsKey kmsKey;
-
   @override
-  State<KeyItem> createState() => _KeyItemState();
+  State<KmsKeyItem> createState() => _KmsKeyItemState();
 }
 
-class _KeyItemState extends State<KeyItem> {
+class _KmsKeyItemState extends State<KmsKeyItem> {
   bool status = true;
 
   @override

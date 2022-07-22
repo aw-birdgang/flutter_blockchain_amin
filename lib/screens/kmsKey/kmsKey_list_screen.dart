@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../controllers/host_controller.dart';
+import '../../controllers/kmskey_controller.dart';
 import '../../shared/constants.dart';
 import '../../shared/responsive.dart';
-import 'components/host_add.dart';
-import 'components/host_item.dart';
+import 'components/kmsKey_add.dart';
+import 'components/kmsKey_item.dart';
 
-class HostListScreen extends StatefulWidget {
-  const HostListScreen({Key? key}) : super(key: key);
+class KmsKeyListScreen extends StatefulWidget {
+  const KmsKeyListScreen({Key? key}) : super(key: key);
   @override
-  State<HostListScreen> createState() => _HostListScreenState();
+  State<KmsKeyListScreen> createState() => _KmsKeyListScreenState();
 }
 
-class _HostListScreenState extends State<HostListScreen> {
-  late HostController hostController;
+class _KmsKeyListScreenState extends State<KmsKeyListScreen> {
+  late KmsKeyController kmsKeyController;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => HostController()..getHosts(),
+      create: (context) => KmsKeyController()..getKmsKeys(),
       child: _consumer(context),
     );
   }
 
   Widget _consumer(BuildContext context) {
-    return Consumer<HostController>(
-      builder: (context, hostController, child) {
-        this.hostController = hostController;
+    return Consumer<KmsKeyController>(
+      builder: (context, kmsKeyController, child) {
+        this.kmsKeyController = kmsKeyController;
         return _scaffold(context);
       },
     );
@@ -47,7 +47,7 @@ class _HostListScreenState extends State<HostListScreen> {
   }
 
   Widget contentView (BuildContext context) {
-    return context.watch<HostController>().isLoading
+    return context.watch<KmsKeyController>().isLoading
         ? const CircularProgressIndicator()
         : Column(
       children: [
@@ -62,9 +62,9 @@ class _HostListScreenState extends State<HostListScreen> {
                 ),
               ),
               onPressed: () {
-                print("HostListScreen > onPressed ");
+                print("KeyListScreen > onPressed ");
                 // context.watch<HostController>().getHosts();
-                hostController.getHosts();
+                kmsKeyController.getKmsKeys();
               },
               icon: const Icon(Icons.swap_horiz),
               label: const Text("새로 고침"),
@@ -78,23 +78,23 @@ class _HostListScreenState extends State<HostListScreen> {
                 ),
               ),
               onPressed: () {
-                print("HostListScreen > onPressed ");
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const HostAdd()));
+                print("KeyListScreen > onPressed ");
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const KmsKeyAdd()));
               },
               icon: const Icon(Icons.add),
-              label: const Text("추가"),
+              label: const Text("Add New"),
             ),
           ],
         ),
         ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: context.watch<HostController>().listHost.length,
-            itemBuilder: (context, index) {
-              return HostItem(context
-                  .watch<HostController>()
-                  .listHost[index]);
-            }),
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: context.watch<KmsKeyController>().listKmsKeys.length,
+          itemBuilder: (context, index) {
+            return KmsKeyItem(context
+              .watch<KmsKeyController>()
+              .listKmsKeys[index]);
+          }),
       ],
     );
   }

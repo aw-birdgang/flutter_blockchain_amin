@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'controllers/auth_controller.dart';
 import 'controllers/host_controller.dart';
-import 'controllers/key_controller.dart';
+import 'controllers/kmskey_controller.dart';
 import 'controllers/menu_controller.dart';
 import 'controllers/token_list_controller.dart';
 import 'screens/main/main_screen.dart';
@@ -14,7 +14,7 @@ import 'shared/constants.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await dotenv.load(fileName: "assets/.env",); //
+  await dotenv.load(fileName: "assets/env/.env.dev",);
   String envProjectId = dotenv.get('PROJECT_ID');
   print("envProjectId :: " + envProjectId);
 
@@ -25,15 +25,6 @@ Future<void> main() async {
     ChangeNotifierProxyProvider<AuthController, MenuController>(
       update: (context, auth, previousMenu) => MenuController(auth),
       create: (BuildContext context) => MenuController(null),
-    ),
-    // ChangeNotifierProvider(
-    //   create: (context) => TokenListController()..getTokens(),
-    // ),
-    // ChangeNotifierProvider(
-    //   create: (context) => HostController()..getHosts(),
-    // ),
-    ChangeNotifierProvider(
-      create: (context) => KeyController()..getKmsKeys(),
     ),
   ], child: const MyApp()));
 }

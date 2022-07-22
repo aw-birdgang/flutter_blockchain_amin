@@ -86,7 +86,7 @@ class _TokenListScreenState extends State<TokenListScreen> {
           ],
         ),
         GridView.builder(
-            physics: const AlwaysScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: context.watch<TokenListController>().listToken.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

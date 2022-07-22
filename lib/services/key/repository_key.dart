@@ -8,23 +8,30 @@ import 'irepository_key.dart';
 class RepositoryKey implements IrepositoryKey {
 
   @override
-  Future encryptKey(name, type) async {
+  Future encryptKey(KmsKey request,) async {
     String api = dotenv.get('API_URL');
-    String url = '$api/v1/auth/auth/register';
+    String url = '$api/v1/key/keyring/encrypt';
     print('encryptKey > url :: ' + url);
+    String apiKey = dotenv.get('API_KEY');
+    print('encryptKey > apiKey :: ' + apiKey);
     Dio dio = Dio();
-    var formData = FormData.fromMap({
-      'name': name,
-      'type': type,
-    });
-    Response response = await dio.post(url, data: formData);
     dio.interceptors.add(InterceptorsWrapper(
-      onRequest:(options, handler) {
-        return handler.resolve(Response(requestOptions:options, data:'fake data'));
-      },
+        onRequest:(options, handler) async {
+          options.headers['Authorization'] = 'Bearer $apiKey';
+          return handler.next(options); //continue
+        },
+        onResponse:(response,handler) {
+          return handler.next(response); // continue
+        },
+        onError: (error, handler) {
+          print('createToken > error.message :: ' + error.message);
+          return  handler.next(error);
+        }
     ));
-    dio.interceptors.add(CustomLogInterceptor());
+    // dio.interceptors.add(CustomLogInterceptor());
+    Response response = await dio.post(url, data: request.toMap());
     print('encryptKey > response.data :: ' + response.toString());
+    return KmsKey.fromJson(response.data);
   }
 
   @override

@@ -68,7 +68,7 @@ class _TokenBalanceState extends State<TokenBalance> {
             controller: privateKeyController,
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
-              hintText: 'input private key',
+              hintText: 'input private kmsKey',
               suffixIcon: IconButton(
                 onPressed: () {
                   print("getBalance > onPressed ");

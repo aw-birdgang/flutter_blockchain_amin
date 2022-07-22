@@ -3,7 +3,7 @@ import 'package:flutter_blockchain_amin/models/menu_model.dart';
 import 'package:flutter_blockchain_amin/screens/dashboard/dashboard_screen.dart';
 
 import '../screens/host/host_list_screen.dart';
-import '../screens/key/key_list_screen.dart';
+import '../screens/kmsKey/kmsKey_list_screen.dart';
 import '../screens/token/token_list_screen.dart';
 import 'auth_controller.dart';
 
@@ -52,7 +52,7 @@ class MenuController extends ChangeNotifier {
     const DashboardScreen(),
     const TokenListScreen(),
     const HostListScreen(),
-    const KeyListScreen(),
+    const KmsKeyListScreen(),
   ];
 
   final _screens_title = [
