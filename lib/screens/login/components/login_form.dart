@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_blockchain_amin/shared/helper/prefer_helper.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controllers/menu_controller.dart';
 import '../../../controllers/auth_controller.dart';
+import '../../../models/UserModel.dart';
 import '../../../shared/components/default_button.dart';
 import '../../../shared/components/default_text_form.dart';
 
@@ -69,18 +71,20 @@ class LoginForm extends StatelessWidget {
               : defaultButton(
               text: "Sign In",
               height: 50,
-              onpress: () {
+              onpress: () async {
                 if (_formkey.currentState!.validate()) {
-                  context.read<AuthController>().signIn(text_emailcontroller.text.trim(),
-                        text_passwordcontroller.text.toString())
-                        .then((value) {
-                      if (value != null) {
-                        text_emailcontroller.clear();
-                        text_passwordcontroller.clear();
-                        print("sign in successfully");
-                        context.read<MenuController>().buildMenu();
-                      } else {}
-                    });
+                  String email = text_emailcontroller.text.trim();
+                  String password = text_passwordcontroller.text.toString();
+                  UserModel? userModel = await context.read<AuthController>().signIn(email, password);
+                  if (userModel != null) {
+                    text_emailcontroller.clear();
+                    text_passwordcontroller.clear();
+                    PreferHelper.setUserId(userModel.userId!);
+                    PreferHelper.setEmail(email);
+                    PreferHelper.setPassword(password);
+                    print("sign in successfully > userModel.userId : " + userModel.userId.toString());
+                    context.read<MenuController>().buildMenu();
+                  }
                 }
               }),
         ],

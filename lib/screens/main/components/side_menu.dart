@@ -58,9 +58,8 @@ class DrawerListTile extends StatelessWidget {
                     Responsive.isTablet(context)) Navigator.pop(context);
               }
               else {
-                context.read<AuthController>()
-                  ..SignOut().then((value) {
-                    context.read<MenuController>()..buildMenu();
+                context.read<AuthController>().SignOut().then((value) {
+                    context.read<MenuController>().buildMenu();
                   });
               }
             },
