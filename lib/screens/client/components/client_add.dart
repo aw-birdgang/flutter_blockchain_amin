@@ -4,19 +4,19 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/object_util.dart';
-import '../../../controllers/host_controller.dart';
-import '../../../models/host.dart';
+import '../../../controllers/client_controller.dart';
+import '../../../models/client.dart';
 import '../../../shared/constants.dart';
 import '../../../shared/responsive.dart';
 
-class HostAdd extends StatefulWidget {
-  const HostAdd({Key? key}) : super(key: key);
+class ClientAdd extends StatefulWidget {
+  const ClientAdd({Key? key}) : super(key: key);
   @override
-  State<HostAdd> createState() => _HostAddState();
+  State<ClientAdd> createState() => _ClientAddState();
 }
 
-class _HostAddState extends State<HostAdd> {
-  late HostController hostController;
+class _ClientAddState extends State<ClientAdd> {
+  late ClientController clientController;
   final nameController = TextEditingController();
   final typeController = TextEditingController();
 
@@ -25,7 +25,7 @@ class _HostAddState extends State<HostAdd> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => HostController(),
+      create: (context) => ClientController(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text(""),
@@ -37,15 +37,15 @@ class _HostAddState extends State<HostAdd> {
   }
 
   Widget _consumer(BuildContext context) {
-    return Consumer<HostController>(
-      builder: (context, hostController, child) {
-        this.hostController = hostController;
-        return _scaffold(context, hostController);
+    return Consumer<ClientController>(
+      builder: (context, clientController, child) {
+        this.clientController = clientController;
+        return _scaffold(context, clientController);
       },
     );
   }
 
-  Widget _scaffold(BuildContext context, HostController hostController,) {
+  Widget _scaffold(BuildContext context, ClientController clientController,) {
     return Container(
       padding: const EdgeInsets.all(defaultPadding),
       decoration: BoxDecoration(
@@ -71,7 +71,7 @@ class _HostAddState extends State<HostAdd> {
         controller: nameController,
         decoration: const InputDecoration(
           border: OutlineInputBorder(),
-          hintText: 'input host name',
+          hintText: 'input client name',
         ),
       ),
     );
@@ -131,11 +131,11 @@ class _HostAddState extends State<HostAdd> {
         ),
         onPressed: () {
           try {
-            Host host = Host();
-            host.name = nameController.text;
-            host.type = typeController.text;
-            host.exposeYn = status;
-            hostController.registerHost(host, response: (result) {
+            Client client = Client();
+            client.name = nameController.text;
+            client.type = typeController.text;
+            client.exposeYn = status;
+            clientController.registerClient(client, response: (result) {
               if (isExists(result)) {
                 Navigator.pop(context);
               }

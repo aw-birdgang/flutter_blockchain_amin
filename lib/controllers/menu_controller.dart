@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_blockchain_amin/models/menu_model.dart';
 import 'package:flutter_blockchain_amin/screens/dashboard/dashboard_screen.dart';
 
-import '../screens/host/host_list_screen.dart';
+import '../screens/client/client_list_screen.dart';
 import '../screens/kmsKey/kmsKey_list_screen.dart';
+import '../screens/login/login_screen.dart';
 import '../screens/token/token_list_screen.dart';
 import 'auth_controller.dart';
 
@@ -48,32 +49,40 @@ class MenuController extends ChangeNotifier {
     buildMenu();
   }
 
+  final _offline_screen = [const LoginScreen()];
+
   final _screens = [
-    const DashboardScreen(),
+    // const DashboardScreen(),
     const TokenListScreen(),
-    const HostListScreen(),
+    const ClientListScreen(),
     const KmsKeyListScreen(),
   ];
 
+  final _offline_screens_title = ['Login'];
   final _screens_title = [
-    'Dashboard',
+    // 'Dashboard',
     'Token List',
     'Host List',
     'Key List',
   ];
 
   final _screens_description = [
-    '홈',
+    // '홈',
     '토큰 목록',
     '호스트 목록',
     '키 목록',
   ];
 
+  final List<MenuModel> _offline_menuModelList = [
+    MenuModel("login", "assets/icons/menu_login.svg")
+  ];
+
   final List<MenuModel> _menuModelList = [
-    MenuModel("Dashboard", "assets/icons/menu_dashbord.svg", isselected: true),
-    MenuModel("Tokens", "assets/icons/menu_tran.svg"),
-    MenuModel("Hosts", "assets/icons/menu_task.svg"),
+    // MenuModel("Dashboard", "assets/icons/menu_dashbord.svg", isselected: true),
+    MenuModel("Tokens", "assets/icons/menu_tran.svg", isselected: true),
+    MenuModel("Clients", "assets/icons/menu_task.svg"),
     MenuModel("Keys", "assets/icons/menu_store.svg"),
+    MenuModel("Logout", "assets/icons/menu_logout.svg"),
   ];
 
   List<MenuModel> menuModelList = [];
@@ -81,10 +90,20 @@ class MenuController extends ChangeNotifier {
   var screens_description = [];
   var screens = [];
   void buildMenu() {
-    screens_title = _screens_title;
-    screens_description = _screens_description;
-    menuModelList = _menuModelList;
-    screens = _screens;
+    if (_authProvider != null && _authProvider!.currentuserModel == null) {
+      screens_title = _offline_screens_title;
+      menuModelList = _offline_menuModelList;
+      screens = _offline_screen;
+    } else {
+      screens_title = _screens_title;
+      screens_description = _screens_description;
+      menuModelList = _menuModelList;
+      screens = _screens;
+    }
+    // screens_title = _screens_title;
+    // screens_description = _screens_description;
+    // menuModelList = _menuModelList;
+    // screens = _screens;
     notifyListeners();
   }
 }

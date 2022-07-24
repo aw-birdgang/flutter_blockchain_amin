@@ -51,10 +51,18 @@ class DrawerListTile extends StatelessWidget {
             selected: true,
             selectedColor: Colors.grey.shade400,
             onTap: () async {
-              context.read<MenuController>().onChangeSelectedMenu(i);
-              if (Responsive.isMobile(context) ||
-                  Responsive.isBigMobile(context) ||
-                  Responsive.isTablet(context)) Navigator.pop(context);
+              if (i != listOfModel.length-1) {
+                context.read<MenuController>().onChangeSelectedMenu(i);
+                if (Responsive.isMobile(context) ||
+                    Responsive.isBigMobile(context) ||
+                    Responsive.isTablet(context)) Navigator.pop(context);
+              }
+              else {
+                context.read<AuthController>()
+                  ..SignOut().then((value) {
+                    context.read<MenuController>()..buildMenu();
+                  });
+              }
             },
             horizontalTitleGap: 0.0,
             leading: SvgPicture.asset(

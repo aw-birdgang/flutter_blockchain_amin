@@ -6,7 +6,6 @@ import 'package:flutter_blockchain_amin/shared/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../token/token_list_screen.dart';
 import 'components/side_menu.dart';
 
 class MainScreen extends StatelessWidget {

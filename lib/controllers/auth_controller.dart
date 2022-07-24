@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_blockchain_amin/models/UserModel.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -6,16 +7,7 @@ class AuthController extends ChangeNotifier {
   String errorMessage = "";
 
   UserModel? currentuserModel;
-
-  AuthController () {
-    UserModel? userModel = UserModel(
-        email: 'birdgang@gmail.com',
-        name: 'birdgang',
-        pic: '',
-        userId: 'birdgang');
-    currentuserModel = userModel;
-    notifyListeners();
-  }
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<UserModel?> signIn(String email, String password) async {
     print("email : " + email + " , password : " + password);
@@ -23,26 +15,23 @@ class AuthController extends ChangeNotifier {
     isloadingSignIn = true;
     notifyListeners();
     try {
-      // await _auth
-      //     .signInWithEmailAndPassword(email: email, password: password)
-      //     .then((value) async {
-      //   // userModel = UserModel(
-      //   //     email: value.user?.email,
-      //   //     name: value.user?.displayName,
-      //   //     pic: '',
-      //   //     userId: value.user?.uid);
-      //   isloadingSignIn = false;
-      //   currentuserModel = userModel;
-      //   notifyListeners();
-      // });
-      userModel = UserModel(
-          email: 'birdgang@gmail.com',
-          name: 'birdgang',
-          pic: '',
-          userId: 'birdgang');
-      isloadingSignIn = false;
-      currentuserModel = userModel;
-      notifyListeners();
+      await _auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((value) async {
+        userModel = UserModel(
+            email: value.user?.email,
+            name: value.user?.displayName,
+            pic: '',
+            userId: value.user?.uid);
+        isloadingSignIn = false;
+        currentuserModel = userModel;
+        notifyListeners();
+      });
+      // userModel = UserModel(
+      //     email: 'birdgang@gmail.com',
+      //     name: 'birdgang',
+      //     pic: '',
+      //     userId: 'birdgang');
     } catch (e) {
       isloadingSignIn = false;
       errorMessage = e.toString();
@@ -59,7 +48,7 @@ class AuthController extends ChangeNotifier {
   }
 
   Future SignOut() async {
-    // await FirebaseAuth.instance.signOut();
+    await FirebaseAuth.instance.signOut();
     currentuserModel = null;
     notifyListeners();
   }

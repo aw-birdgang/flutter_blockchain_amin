@@ -2,27 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_blockchain_amin/shared/components/default_text_info_row.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
-import '../../../models/host.dart';
+import '../../../models/client.dart';
 import '../../../shared/constants.dart';
 import '../../../shared/utils.dart';
 
-class HostItem extends StatefulWidget {
-  HostItem(this.host, {Key? key}) : super(key: key);
-  Host host;
+class ClientItem extends StatefulWidget {
+  ClientItem(this.client, {Key? key}) : super(key: key);
+  Client client;
 
   @override
-  State<HostItem> createState() => _HostItemState();
+  State<ClientItem> createState() => _ClientItemState();
 }
 
-class _HostItemState extends State<HostItem> {
+class _ClientItemState extends State<ClientItem> {
   bool status = true;
 
   @override
   Widget build(BuildContext context) {
     Size size = Utils.getscreensize(context);
-    String name = widget.host.name!;
-    String accessToken = widget.host.accessToken!;
-    String type = widget.host.type!;
+    String name = widget.client.name!;
+    String accessToken = widget.client.accessToken!;
+    String type = widget.client.type!;
     return Padding(
       padding: const EdgeInsets.all(defaultPadding),
       child: Material(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../controllers/host_controller.dart';
+import '../../controllers/client_controller.dart';
 import '../../shared/constants.dart';
 
 class DepositScreen extends StatefulWidget {
@@ -11,20 +11,20 @@ class DepositScreen extends StatefulWidget {
 }
 
 class _DepositScreenState extends State<DepositScreen> {
-  late HostController hostController;
+  late ClientController clientController;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => HostController()..getHosts(),
+      create: (context) => ClientController()..getClients(),
       child: _consumer(context),
     );
   }
 
   Widget _consumer(BuildContext context) {
-    return Consumer<HostController>(
-      builder: (context, hostController, child) {
-        this.hostController = hostController;
+    return Consumer<ClientController>(
+      builder: (context, clientController, child) {
+        this.clientController = clientController;
         return _scaffold(context);
       },
     );
@@ -44,7 +44,7 @@ class _DepositScreenState extends State<DepositScreen> {
   }
 
   Widget contentView (BuildContext context) {
-    return context.watch<HostController>().isLoading
+    return context.watch<ClientController>().isLoading
         ? const CircularProgressIndicator()
         : Column(
       children: [

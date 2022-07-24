@@ -29,6 +29,12 @@ dependencies:
   flutter_switch: ^0.3.2
   pull_to_refresh: ^2.0.0
 
+  #firebase
+  cloud_firestore: ^3.4.0
+  firebase_auth: ^3.5.0
+  firebase_core: ^1.20.0
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -42,3 +48,4 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/env/
+

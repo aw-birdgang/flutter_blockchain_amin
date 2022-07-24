@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../controllers/host_controller.dart';
+import '../../controllers/client_controller.dart';
 import '../../shared/constants.dart';
 import '../../shared/responsive.dart';
-import 'components/host_add.dart';
-import 'components/host_item.dart';
+import 'components/client_add.dart';
+import 'components/client_item.dart';
 
-class HostListScreen extends StatefulWidget {
-  const HostListScreen({Key? key}) : super(key: key);
+class ClientListScreen extends StatefulWidget {
+  const ClientListScreen({Key? key}) : super(key: key);
   @override
-  State<HostListScreen> createState() => _HostListScreenState();
+  State<ClientListScreen> createState() => _ClientListScreenState();
 }
 
-class _HostListScreenState extends State<HostListScreen> {
-  late HostController hostController;
+class _ClientListScreenState extends State<ClientListScreen> {
+  late ClientController clientController;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => HostController()..getHosts(),
+      create: (context) => ClientController()..getClients(),
       child: _consumer(context),
     );
   }
 
   Widget _consumer(BuildContext context) {
-    return Consumer<HostController>(
-      builder: (context, hostController, child) {
-        this.hostController = hostController;
+    return Consumer<ClientController>(
+      builder: (context, clientController, child) {
+        this.clientController = clientController;
         return _scaffold(context);
       },
     );
@@ -47,7 +47,7 @@ class _HostListScreenState extends State<HostListScreen> {
   }
 
   Widget contentView (BuildContext context) {
-    return context.watch<HostController>().isLoading
+    return context.watch<ClientController>().isLoading
         ? const CircularProgressIndicator()
         : Column(
       children: [
@@ -62,9 +62,9 @@ class _HostListScreenState extends State<HostListScreen> {
                 ),
               ),
               onPressed: () {
-                print("HostListScreen > onPressed ");
-                // context.watch<HostController>().getHosts();
-                hostController.getHosts();
+                print("ClientListScreen > onPressed ");
+                // context.watch<HostController>().getClients();
+                clientController.getClients();
               },
               icon: const Icon(Icons.swap_horiz),
               label: const Text("새로 고침"),
@@ -78,8 +78,8 @@ class _HostListScreenState extends State<HostListScreen> {
                 ),
               ),
               onPressed: () {
-                print("HostListScreen > onPressed ");
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const HostAdd()));
+                print("ClientListScreen > onPressed ");
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const ClientAdd()));
               },
               icon: const Icon(Icons.add),
               label: const Text("추가"),
@@ -89,11 +89,11 @@ class _HostListScreenState extends State<HostListScreen> {
         ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: context.watch<HostController>().listHost.length,
+            itemCount: context.watch<ClientController>().listClients.length,
             itemBuilder: (context, index) {
-              return HostItem(context
-                  .watch<HostController>()
-                  .listHost[index]);
+              return ClientItem(context
+                  .watch<ClientController>()
+                  .listClients[index]);
             }),
       ],
     );

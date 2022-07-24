@@ -10,7 +10,7 @@ class RepositoryKey implements IrepositoryKey {
   @override
   Future encryptKey(KmsKey request,) async {
     String api = dotenv.get('API_URL');
-    String url = '$api/v1/key/keyring/encrypt';
+    String url = '$api/v1/key/encrypt';
     print('encryptKey > url :: ' + url);
     String apiKey = dotenv.get('API_KEY');
     print('encryptKey > apiKey :: ' + apiKey);
@@ -37,7 +37,7 @@ class RepositoryKey implements IrepositoryKey {
   @override
   Future<List<KmsKey>> getKeys() async {
     String api = dotenv.get('API_URL');
-    String url = '$api/v1/key/keyring';
+    String url = '$api/v1/key';
     print('getKeys > url :: ' + url);
     Dio dio = Dio();
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_blockchain_amin/controllers/menu_controller.dart';
 import 'package:flutter_blockchain_amin/controllers/auth_controller.dart';
+import 'package:flutter_blockchain_amin/controllers/menu_controller.dart';
 import 'package:flutter_blockchain_amin/shared/responsive.dart';
 import 'package:provider/provider.dart';
 
@@ -39,7 +39,7 @@ class Header extends StatelessWidget {
         if (!Responsive.isMobile(context))
           Spacer(flex: Responsive.isDesktop(context) ? 2 : 1),
         Expanded(flex: 2, child: SearchField()),
-        const ProfileCard()
+        const ProfileCard(),
       ],
     );
   }
@@ -110,3 +110,29 @@ class SearchField extends StatelessWidget {
     );
   }
 }
+
+
+
+// class Logout extends StatelessWidget {
+//   const Logout({
+//     Key? key,
+//   }) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.all(defaultPadding),
+//       child: defaultButton(
+//           text: "Sign Out",
+//           height: 50,
+//           onpress: () {
+//             context.read<AuthController>()
+//               ..SignOut().then((value) {
+//                 context.read<MenuController>()..buildMenu();
+//               });
+//           }
+//       ),
+//     );
+//   }
+// }
+

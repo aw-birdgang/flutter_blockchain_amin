@@ -71,8 +71,7 @@ class LoginForm extends StatelessWidget {
               height: 50,
               onpress: () {
                 if (_formkey.currentState!.validate()) {
-                  context.read<AuthController>()
-                    ..signIn(text_emailcontroller.text.trim(),
+                  context.read<AuthController>().signIn(text_emailcontroller.text.trim(),
                         text_passwordcontroller.text.toString())
                         .then((value) {
                       if (value != null) {

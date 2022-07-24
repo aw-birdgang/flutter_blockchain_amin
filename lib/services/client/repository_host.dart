@@ -1,20 +1,20 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_blockchain_amin/models/host.dart';
+import 'package:flutter_blockchain_amin/models/client.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../log/custom_logInterceptor.dart';
 import 'irepository_host.dart';
 
-class RepositoryHost implements IrepositoryHost {
+class RepositoryClient implements IrepositoryClient {
 
   @override
-  Future registerHost(Host request,) async {
+  Future registerClient(Client request,) async {
     String api = dotenv.get('API_URL');
-    String url = '$api/v1/auth/auth/register';
-    print('registerHost > url :: ' + url);
-    print('registerHost > request.toString() :: ' + request.toString());
+    String url = '$api/v1/auth/register';
+    print('registerClient > url :: ' + url);
+    print('registerClient > request.toString() :: ' + request.toString());
     String apiKey = dotenv.get('API_KEY');
-    print('registerHost > apiKey :: ' + apiKey);
+    print('registerClient > apiKey :: ' + apiKey);
     Dio dio = Dio();
     dio.interceptors.add(InterceptorsWrapper(
       onRequest:(options, handler) async {
@@ -25,20 +25,20 @@ class RepositoryHost implements IrepositoryHost {
         return handler.next(response); // continue
       },
       onError: (error, handler) {
-        print('createToken > error.message :: ' + error.message);
+        print('registerClient > error.message :: ' + error.message);
         return  handler.next(error);
       }
     ));
     // dio.interceptors.add(CustomLogInterceptor());
     Response response = await dio.post(url, data: request.toMap());
-    return Host.fromJson(response.data);
+    return Client.fromJson(response.data);
   }
 
   @override
-  Future<List<Host>> getHosts() async {
+  Future<List<Client>> getClients() async {
     String api = dotenv.get('API_URL');
-    String url = '$api/v1/users';
-    print('getHosts > url :: ' + url);
+    String url = '$api/v1/client';
+    print('getClients > url :: ' + url);
     Dio dio = Dio();
     Response response = await dio.get(url);
     dio.interceptors.add(InterceptorsWrapper(
@@ -48,12 +48,12 @@ class RepositoryHost implements IrepositoryHost {
     ));
     // CustomLog
     dio.interceptors.add(CustomLogInterceptor());
-    print('getHosts > response.data :: ' + response.toString());
-    List<Host> hosts = (response.data as List)
-        .map((x) => Host.fromJson(x))
+    print('getClients > response.data :: ' + response.toString());
+    List<Client> clients = (response.data as List)
+        .map((x) => Client.fromJson(x))
         .toList();
-    print('getHosts > hosts.length.toString() :: ' + hosts.length.toString());
-    return hosts;
+    print('getClients > clients.length.toString() :: ' + clients.length.toString());
+    return clients;
   }
 
 }

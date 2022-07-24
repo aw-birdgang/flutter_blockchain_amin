@@ -1,23 +1,28 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'controllers/auth_controller.dart';
-import 'controllers/host_controller.dart';
-import 'controllers/kmskey_controller.dart';
 import 'controllers/menu_controller.dart';
-import 'controllers/token_list_controller.dart';
 import 'screens/main/main_screen.dart';
 import 'shared/constants.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: "assets/env/.env.dev");
+  String envFbProjectId = dotenv.get('FIREBASE_PROJECT_ID');
+  print("envFbProjectId :: " + envFbProjectId);
 
-  await dotenv.load(fileName: "assets/env/.env.dev",);
-  String envProjectId = dotenv.get('PROJECT_ID');
-  print("envProjectId :: " + envProjectId);
-
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+      apiKey: dotenv.get('FIREBASE_API_KEY'), // Your apiKey
+      appId: dotenv.get('FIREBASE_PROJECT_ID'),
+      projectId: dotenv.get('FIREBASE_PROJECT_ID'),
+      messagingSenderId: dotenv.get('FIREBASE_PROJECT_ID'),
+    ),
+  );
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
       create: (context) => AuthController(),

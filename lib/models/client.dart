@@ -1,6 +1,6 @@
 import '../common/map_util.dart';
 
-class Host {
+class Client {
   int? id;
   String? name;
   String? accessToken;
@@ -9,7 +9,7 @@ class Host {
   String? createdAt;
   String? updatedAt;
 
-  Host({
+  Client({
     this.id,
     this.name,
     this.accessToken,
@@ -29,8 +29,8 @@ class Host {
     "updatedAt": updatedAt,
   };
 
-  Host.fromJson(Map<String, dynamic> map) {
-    print('Host.fromJson > map.toString() :: ' + map.toString());
+  Client.fromJson(Map<String, dynamic> map) {
+    print('Client.fromJson > map.toString() :: ' + map.toString());
     id = getItemFromMapForInt(map, "id");
     name = getItemFromMapForStr(map, "name");
     accessToken = getItemFromMapForStr(map, "accessToken");

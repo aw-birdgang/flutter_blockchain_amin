@@ -63,7 +63,7 @@ class _KmsKeyListScreenState extends State<KmsKeyListScreen> {
               ),
               onPressed: () {
                 print("KeyListScreen > onPressed ");
-                // context.watch<HostController>().getHosts();
+                // context.watch<HostController>().getClients();
                 kmsKeyController.getKmsKeys();
               },
               icon: const Icon(Icons.swap_horiz),
